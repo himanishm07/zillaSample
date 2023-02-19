@@ -64,6 +64,13 @@ bindings:
         mechanism: plain
         username: QLWD3ODZVK7XNCBD
         password: KPVLw7dfZvbK/IJvASjVtyzyZ4iQ4TzSIcRNrARPt6q/l93drB0hy/Wa6fXL
+  tls_client7ecb3414-3105-462b-a775-2cc081893f7c:
+    type: tls
+    kind: client
+    options:
+      trustcacerts: true
+      sni:
+        - "*.us-east-1.aws.confluent.cloud"
   tcp_client7ecb3414-3105-462b-a775-2cc081893f7c:
     type: tcp
     kind: client
