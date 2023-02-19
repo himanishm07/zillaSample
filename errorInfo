@@ -1,0 +1,121 @@
+    routes: []
+  http-kafka_proxy5b316178-18e8-4d2d-8930-1512b3bb8f9b:
+    type: http-kafka
+    kind: proxy
+    routes:
+      - when:
+          - method: POST
+            path: /tasks
+        exit: kafka_cache_client7ecb3414-3105-462b-a775-2cc081893f7c
+        with:
+          capability: produce
+          reply-to: output-topic1
+          topic: test2
+          key: ${idempotencyKey}
+          overrides: {}
+  kafka_cache_client7ecb3414-3105-462b-a775-2cc081893f7c:
+    type: kafka
+    kind: cache_client
+    exit: kafka_cache_server7ecb3414-3105-462b-a775-2cc081893f7c
+  kafka_cache_server7ecb3414-3105-462b-a775-2cc081893f7c:
+    type: kafka
+    kind: cache_server
+    options:
+      bootstrap:
+        - output-topic1
+    exit: kafka_client7ecb3414-3105-462b-a775-2cc081893f7c
+  kafka_client7ecb3414-3105-462b-a775-2cc081893f7c:
+    type: kafka
+    kind: client
+    exit: tls_client7ecb3414-3105-462b-a775-2cc081893f7c
+    options:
+      sasl:
+        mechanism: plain
+        username: QLWD3ODZVK7XNCBD
+        password: KPVLw7dfZvbK/IJvASjVtyzyZ4iQ4TzSIcRNrARPt6q/l93drB0hy/Wa6fXL/Pfw
+  tls_client7ecb3414-3105-462b-a775-2cc081893f7c:
+    type: tls
+    kind: client
+    options:
+      trustcacerts: true
+      sni:
+        - "*.us-east-1.aws.confluent.cloud"
+  tcp_client7ecb3414-3105-462b-a775-2cc081893f7c:
+    type: tcp
+    kind: client
+    options:
+      host: pkc-n00kk.us-east-1.aws.confluent.cloud
+      port: 9092
+    routes:
+      - when:
+          - cidr: 0.0.0.0/0
+
+guards: {}
+started
+Exactly one of the following sets of problems must be resolved.
+1) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "tcp".
+   [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+   [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+2) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "http-filesystem".
+   [69,16][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/kind] The value must be one of ["proxy"].
+   [71,6][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options] The object must not have a property whose name is "options".
+   At least one of the following sets of problems must be resolved.
+   1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+   2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+3) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "sse".
+   [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+   [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+   At least one of the following sets of problems must be resolved.
+   1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+   2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+4) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "echo".
+   [69,16][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/kind] The value must be one of ["server"].
+   [71,6][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options] The object must not have a property whose name is "options".
+5) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "sse-kafka".
+   [69,16][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/kind] The value must be one of ["proxy"].
+   [71,6][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options] The object must not have a property whose name is "options".
+   At least one of the following sets of problems must be resolved.
+   1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+   2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+6) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "filesystem".
+   [69,16][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/kind] The value must be one of ["server"].
+   [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+   [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+7) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "proxy".
+   [71,6][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options] The object must not have a property whose name is "options".
+   At least one of the following sets of problems must be resolved.
+   1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+   2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+8) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "fan".
+   [69,16][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/kind] The value must be one of ["server"].
+   [71,6][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options] The object must not have a property whose name is "options".
+   At least one of the following sets of problems must be resolved.
+   1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+   2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+9) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "kafka".
+   [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+   [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+   At least one of the following sets of problems must be resolved.
+   1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+   2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+10) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "http-kafka".
+    [69,16][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/kind] The value must be one of ["proxy"].
+    [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+    [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+    [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+11) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "http".
+    [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+    [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+    At least one of the following sets of problems must be resolved.
+    1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+    2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+12) At least one of the following sets of problems must be resolved.
+    1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+    2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
+13) [68,13][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/type] The value must be constant string "ws".
+    [71,24][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/trustcacerts] The object must not have a property whose name is "trustcacerts".
+    [73,8][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c/options/sni] The object must not have a property whose name is "sni".
+stopped
+    At least one of the following sets of problems must be resolved.
+    1) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "exit".
+    2) [74,2][/bindings/tls_client7ecb3414-3105-462b-a775-2cc081893f7c] The object must have a property whose name is "routes".
