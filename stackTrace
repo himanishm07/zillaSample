@@ -1,0 +1,35 @@
+      port: 9092
+    routes:
+      - when:
+          - cidr: 0.0.0.0/0
+guards: {}
+started
+org.agrona.concurrent.AgentTerminationException: java.lang.IllegalArgumentException: Contains non-LDH ASCII characters
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.doWork(DispatchAgent.java:585)
+	at org.agrona.core/org.agrona.concurrent.AgentRunner.doDutyCycle(AgentRunner.java:291)
+	at org.agrona.core/org.agrona.concurrent.AgentRunner.run(AgentRunner.java:164)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.IllegalArgumentException: Contains non-LDH ASCII characters
+	at java.base/java.net.IDN.toASCIIInternal(IDN.java:297)
+	at java.base/java.net.IDN.toASCII(IDN.java:123)
+	at java.base/javax.net.ssl.SNIHostName.<init>(SNIHostName.java:99)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at io.aklivity.zilla.runtime.binding.tls@0.9.42/io.aklivity.zilla.runtime.binding.tls.internal.config.TlsBindingConfig.newClientEngine(TlsBindingConfig.java:203)
+	at io.aklivity.zilla.runtime.binding.tls@0.9.42/io.aklivity.zilla.runtime.binding.tls.internal.stream.TlsClientFactory.newStream(TlsClientFactory.java:225)
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.handleBeginInitial(DispatchAgent.java:1309)
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.handleDefaultReadInitial(DispatchAgent.java:1083)
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.handleReadInitial(DispatchAgent.java:1023)
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.handleRead(DispatchAgent.java:966)
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.concurent.ManyToOneRingBuffer.read(ManyToOneRingBuffer.java:181)
+	at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.doWork(DispatchAgent.java:579)
+	... 3 more
+	Suppressed: java.lang.Exception: [engine/data#5]	[0x0505000000000013] streams=[consumeAt=0x00000b70 (0x0000000000000b70), produceAt=0x00000b70 (0x0000000000000b70)]
+		at io.aklivity.zilla.runtime.engine@0.9.42/io.aklivity.zilla.runtime.engine.internal.registry.DispatchAgent.doWork(DispatchAgent.java:583)
+stopped
+		... 3 more
