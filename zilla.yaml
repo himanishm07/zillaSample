@@ -17,11 +17,14 @@ bindings:
     routes:
       - when:
           - headers:
+              :method: GET
+              :path: /allTasks
+        exit: sse_server5b316178-18e8-4d2d-8930-1512b3bb8f9b
+      - when:
+          - headers:
               :method: POST
               :path: /tasks
         exit: http-kafka_proxy5b316178-18e8-4d2d-8930-1512b3bb8f9b
-      - when: []
-        exit: sse_server5b316178-18e8-4d2d-8930-1512b3bb8f9b
   sse_server5b316178-18e8-4d2d-8930-1512b3bb8f9b:
     type: sse
     kind: server
@@ -29,7 +32,14 @@ bindings:
   sse-kafka_proxy5b316178-18e8-4d2d-8930-1512b3bb8f9b:
     type: sse-kafka
     kind: proxy
-    routes: []
+    routes:
+      - when:
+          - path: /allTasks
+        with:
+          event:
+            id: '["${base64(key)}","${etag}"]'
+          topic: output-topic1
+        exit: kafka_cache_client7ecb3414-3105-462b-a775-2cc081893f7c
   http-kafka_proxy5b316178-18e8-4d2d-8930-1512b3bb8f9b:
     type: http-kafka
     kind: proxy
@@ -63,7 +73,7 @@ bindings:
       sasl:
         mechanism: plain
         username: QLWD3ODZVK7XNCBD
-        password: KPVLw7dfZvbK/IJvASjVtyzyZ4iQ4TzSIcRNrARPt6q/l93drB0hy/Wa6fXL/
+        password: KPVLw7dfZvbK/IJvASjVtyzyZ4iQ4TzSIcRNrARPt6q/l93drB0hy/Wa6fXL
   tls_client7ecb3414-3105-462b-a775-2cc081893f7c:
     type: tls
     kind: client
@@ -82,3 +92,4 @@ bindings:
       - when:
           - cidr: 0.0.0.0/0
 guards: {}
+started
